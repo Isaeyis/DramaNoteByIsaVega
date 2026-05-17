@@ -23,28 +23,22 @@ let dramas = [
 ];
 
 // Ruta de prueba para saber si el cerebro vive
-app.get('/', (req, res ) => {
+app.get('/api/', (req, res ) => {
   res.send('¡El cerebro de DramaNote está vivo! Ve a /dramas para ver los datos.');
 });
 
 // Rutas de la API
-app.get('/dramas', (req, res) => res.json(dramas));
+app.get('/api/dramas', (req, res) => res.json(dramas));
 
-app.post('/dramas', (req, res) => {
+app.post('/api/dramas', (req, res) => {
   const newDrama = { id: Date.now(), ...req.body };
   dramas.push(newDrama);
   res.status(201).json(newDrama);
 });
 
-app.delete('/dramas/:id', (req, res) => {
+app.delete('/api/dramas/:id', (req, res) => {
   dramas = dramas.filter(d => d.id !== parseInt(req.params.id));
   res.json({ message: 'Eliminado' });
-});
-
-// Encender el servidor
-const PORT = 5000;
-app.listen(PORT, () => {
-  console.log(`Servidor corriendo en http://localhost:${PORT}` );
 });
 
 module.exports = app;
